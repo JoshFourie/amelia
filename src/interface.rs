@@ -14,16 +14,17 @@ pub struct Amelia {
     pub calories: usize,
 }
 
-pub fn go_andromeda(s: String) -> String {
-    let amelia: Amelia = from_str(&s).expect("Amelia::go_andromeda() deserializing Amelia to struct");
-    let k = Knowledge::init(
-        Vec::new(),
-        Vec::new(),
-        vec![amelia.sleep, amelia.calories],
-        Vec::new(),
-        String::new(),
-    );
-    let crs = CommonReference::<FrLocal, G1Local, G2Local>::read(&amelia.crs);
-    Andromeda::init(crs, k).go().wrap_as_str()        
+impl Amelia {
+    pub fn go_andromeda(s: String) -> String {
+        let amelia: Amelia = from_str(&s).expect("Amelia::go_andromeda() deserializing Amelia to struct");
+        let k = Knowledge::init(
+            None,
+            None,
+            Some(vec![amelia.sleep, amelia.calories]),
+            None,
+            None,
+        );
+        let crs = CommonReference::<FrLocal, G1Local, G2Local>::read(&amelia.crs);
+        Andromeda::init(crs, k).go().wrap_as_str()        
+    }
 }
-
