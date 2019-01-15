@@ -48,6 +48,8 @@ impl Amelia {
 
 #[test]
 fn test_go_andromeda() {
+    use zero_orb::{interface::{BackPack, MarkZero}, CommonReference, FrLocal, G1Local, G2Local, GtLocal};
+
     let amelia_serialized = serde_json::to_string(
         &Amelia {
             crs: std::fs::read_to_string("src/tests/sample.crs")
@@ -58,5 +60,10 @@ fn test_go_andromeda() {
             key_pair: Amelia::gen_ed25519_key_pairing(),
         }
     ).expect("internal_tests: Serializing &x to String");
-    println!("{}", Amelia::go_andromeda(amelia_serialized));
+    let object = Amelia::go_andromeda(amelia_serialized);
+    assert!(
+        serde_json::from_str::<BackPack<CommonReference<FrLocal, G1Local, G2Local>, FrLocal, G1Local, G2Local, GtLocal>>(&object)
+            .expect("internal_test: serde_json::from_str::BackPack<...>::(&object) panicked when deserializing to BackPack")
+            .verify()
+    );
 }
