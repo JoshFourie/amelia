@@ -9,11 +9,11 @@ use serde_derive::{Serialize, Deserialize};
 
 #[derive(Serialize, Deserialize)]
 pub struct Amelia {
-    crs: String,
-    sleep: usize,
-    calories: usize,
-    output: usize,
-    key_pair: String,
+    pub crs: String,
+    pub sleep: usize,
+    pub calories: usize,
+    pub output: usize,
+    pub key_pair: String,
 }
 
 impl Amelia {
@@ -45,7 +45,7 @@ impl Amelia {
 
 #[test]
 fn test_go_andromeda() {
-    use zero_orb::{interface::{BackPack, MarkZero}, CommonReference, FrLocal, G1Local, G2Local, GtLocal};
+    use zero_orb::{interface::*, *};
 
     let amelia_serialized = serde_json::to_string(
         &Amelia {
