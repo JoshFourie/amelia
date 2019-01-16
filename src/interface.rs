@@ -20,11 +20,8 @@ impl Amelia {
     pub fn go_andromeda(json_string: String) -> String {
         let amelia: Amelia = serde_json::from_str(&json_string)
             .expect("Amelia::go_andromeda() deserializing Amelia to struct");
-        let proof_struct = Knowledge::into(
-            None,
-            None,
+        let proof_struct = Knowledge::into_num_only(
             Some(vec![amelia.sleep, amelia.calories]),
-            None,
             None,
         );
         let key_pair: Box<[u8]> = serde_json::from_str(&amelia.key_pair)
